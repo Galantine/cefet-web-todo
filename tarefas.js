@@ -18,6 +18,8 @@ class Tarefa {
   	novoItemLista.innerHTML = this.nome
   	if(this.realizada)
   		novoItemLista.classList.toggle('marcado')
+  	if((this.categoria != campoFiltroCategoria.value) && (campoFiltroCategoria.value.length > 0))
+  		novoItemLista.classList.toggle('retido-no-filtro')
   	containerEl.appendChild(novoItemLista)
   	return novoItemLista
   }
@@ -41,11 +43,15 @@ tarefas.forEach(tarefa => {
 	tarefa.adicionaNaPagina(listaTarefas)
 })
 
-botaoAdicionar.addEventListener('click', e => {
+function adicionarNovaTarefa() {
 	let novaTarefa = new Tarefa(campoNovaTarefaNome.value, campoNovaTarefaCategoria.value, false)
 	tarefas.push(novaTarefa)
 	let novoItemLista = novaTarefa.adicionaNaPagina(listaTarefas)
 	campoNovaTarefaNome.focus()
+}
+
+botaoAdicionar.addEventListener('click', e => {
+	adicionarNovaTarefa()
 });
 
 campoFiltroCategoria.addEventListener('change', e => {
@@ -56,4 +62,9 @@ campoFiltroCategoria.addEventListener('change', e => {
 		else
 			item.classList.add('retido-no-filtro')
 	})
+});
+
+campoNovaTarefaNome.addEventListener('keyup', e => {
+	if(e.key === 'Enter')
+		adicionarNovaTarefa()
 });
