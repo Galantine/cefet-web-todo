@@ -2,6 +2,7 @@ let listaTarefas = document.querySelectorAll('#lista-tarefas')[0]
 let campoNovaTarefaNome = document.querySelectorAll('#nova-tarefa-nome')[0]
 let campoNovaTarefaCategoria = document.querySelectorAll('#nova-tarefa-categoria')[0]
 let botaoAdicionar = document.querySelectorAll('#incluir-nova-tarefa')[0]
+let campoFiltroCategoria = document.querySelectorAll('#filtro-de-categoria')[0]
 
 class Tarefa {
   constructor(nome, categoria, realizada) {
@@ -45,4 +46,14 @@ botaoAdicionar.addEventListener('click', e => {
 	tarefas.push(novaTarefa)
 	let novoItemLista = novaTarefa.adicionaNaPagina(listaTarefas)
 	campoNovaTarefaNome.focus()
+});
+
+campoFiltroCategoria.addEventListener('change', e => {
+	let itensLista = document.querySelectorAll('.item-tarefa')
+	itensLista.forEach(item => {
+		if(item.classList.toString().includes(campoFiltroCategoria.value))
+			item.classList.remove('retido-no-filtro')
+		else
+			item.classList.add('retido-no-filtro')
+	})
 });
