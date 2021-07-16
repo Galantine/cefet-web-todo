@@ -68,3 +68,11 @@ campoNovaTarefaNome.addEventListener('keyup', e => {
 	if(e.key === 'Enter')
 		adicionarNovaTarefa()
 });
+
+document.querySelectorAll('.item-tarefa').forEach(item => {
+	item.addEventListener('click', e => {
+		item.classList.toggle('marcado')
+		tarefas[Array.prototype.indexOf.call(listaTarefas.children,item)].realizada = item.classList.contains('marcado')
+		console.log(tarefas[0])
+	});
+})
