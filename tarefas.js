@@ -1,4 +1,7 @@
 let listaTarefas = document.querySelectorAll('#lista-tarefas')[0]
+let campoNovaTarefaNome = document.querySelectorAll('#nova-tarefa-nome')[0]
+let campoNovaTarefaCategoria = document.querySelectorAll('#nova-tarefa-categoria')[0]
+let botaoAdicionar = document.querySelectorAll('#incluir-nova-tarefa')[0]
 
 class Tarefa {
   constructor(nome, categoria, realizada) {
@@ -8,13 +11,14 @@ class Tarefa {
   }
 
   adicionaNaPagina(containerEl) {
-  	let novoItem = document.createElement('li')
-  	novoItem.classList.toggle('item-tarefa')
-  	novoItem.classList.toggle(`categoria-${this.categoria}`)
-  	novoItem.innerHTML = this.nome
+  	let novoItemLista = document.createElement('li')
+  	novoItemLista.classList.toggle('item-tarefa')
+  	novoItemLista.classList.toggle(`categoria-${this.categoria}`)
+  	novoItemLista.innerHTML = this.nome
   	if(this.realizada)
-  		novoItem.classList.toggle('marcado')
-  	containerEl.appendChild(novoItem)
+  		novoItemLista.classList.toggle('marcado')
+  	containerEl.appendChild(novoItemLista)
+  	return novoItemLista
   }
 }
 
@@ -35,3 +39,10 @@ listaTarefas.innerHTML = ""
 tarefas.forEach(tarefa => {
 	tarefa.adicionaNaPagina(listaTarefas)
 })
+
+botaoAdicionar.addEventListener('click', e => {
+	let novaTarefa = new Tarefa(campoNovaTarefaNome.value, campoNovaTarefaCategoria.value, false)
+	tarefas.push(novaTarefa)
+	let novoItemLista = novaTarefa.adicionaNaPagina(listaTarefas)
+	campoNovaTarefaNome.focus()
+});
